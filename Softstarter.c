@@ -86,38 +86,38 @@ enum {PRIMEIRO = 0, SEGUNDO, TERCEIRO, QUARTO};
 
 //VARIAVEIS DE PULSO
 typedef enum {SUBIDA = 0, DESCIDA} Borda_t;
-Borda_t Borda = SUBIDA;
+static Borda_t Borda = SUBIDA;
 
-uint16_t novoPulso = PULSO_INICIAL_CCR;
-uint16_t Pulso [N_BORDAS] = {PULSO_INICIAL_CCR, (PULSO_INICIAL_CCR + LARGURA_PULSO_CCR)};
+static uint16_t novoPulso = PULSO_INICIAL_CCR;
+static uint16_t Pulso [N_BORDAS] = {PULSO_INICIAL_CCR, (PULSO_INICIAL_CCR + LARGURA_PULSO_CCR)};
 
-uint16_t i;
-uint16_t angulo;
+static uint16_t i;
+static uint16_t angulo;
 
 //CONVERSÃO ANALOGICO DIGITAL E SOBRECORRENTE
 volatile uint16_t ADC_Val[N_CONVERSOES];
 
-float I_Atual;
-float I_Nominal = 450.0;
-float I_LimiteRampa = 1.5;     // 150%
-float I_Max = 2.0;             // 200%
+static float I_Atual;
+static float I_Nominal = 450.0;
+static float I_LimiteRampa = 1.5;     // 150%
+static float I_Max = 2.0;             // 200%
 
 //TRANSMISSÃO E RECEPÇÃO SERIAL
-uint8_t comando[T_CMD] = {0};
-char msg[T_MSG] = {0};
+static uint8_t comando[T_CMD] = {[0...T_CMD], 0};
+static char msg[T_MSG] = {[0...T_MSG], 0};
 
 //CALCULOS PARA TEMPO DE RAMPA
-uint16_t t_partida;
-int ARR_partida;
+static uint16_t t_partida;
+static int ARR_partida;
 
-float T_p;               // PERIODO DE PARTIDA
-float F_p;               // FREQUÊNCIA DE PARTIDA
+static float T_p;               // PERIODO DE PARTIDA
+static float F_p;               // FREQUÊNCIA DE PARTIDA
 
-uint16_t t_descida;
-int ARR_descida;
+static uint16_t t_descida;
+static int ARR_descida;
 
-float T_d;              // PERIODO DE DESCIDA
-float F_d;              // FREQUÊNCIA DE PARTIDA
+static float T_d;              // PERIODO DE DESCIDA
+static float F_d;              // FREQUÊNCIA DE PARTIDA
 
 /* USER CODE END PV */
 
@@ -169,7 +169,7 @@ int main(void)
   MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
 
-  htim3.Instance->CCMR1 |= TIM_CCMR1_OC1CE;  // D�? CLEAR NO OC DE FORMA A NÃO ATRAPALHAR OS PULSOS
+  htim3.Instance->CCMR1 |= TIM_CCMR1_OC1CE;  // DÁ CLEAR NO OC DE FORMA A NÃO ATRAPALHAR OS PULSOS
 
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim10);
