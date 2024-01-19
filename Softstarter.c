@@ -95,7 +95,7 @@ static uint16_t i;
 static uint16_t angulo;
 
 //CONVERSÃO ANALOGICO DIGITAL E SOBRECORRENTE
-volatile uint16_t ADC_Val[N_CONVERSOES];
+volatile uint16_t ADC_Val[N_CONVERSOES] = {[0...N_CONVERSOES], 0};
 
 static float I_Atual;
 static float I_Nominal = 450.0;
