@@ -2,7 +2,7 @@
 #define _RAMP_VECTOR_H_
 
 // ANGLE TABLE CORRESPONDING TO THE SELECTED ARR: 17400
-uint16_t Rampa_SoftStarter[180] = {
+uint16_t Ramp_SoftStarter[180] = {
     17400,
     17303,
     17206,
