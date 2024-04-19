@@ -4,8 +4,8 @@
 #define ARR 17999
 #define TAMANHO 42
 
-static uint16_t Val_Angulos[TAMANHO] = {[0...TAMANHO], 0};
-static uint16_t Val_ARR[TAMANHO] = {[0...TAMANHO], 0};
+static uint16_t Val_Angulos[TAMANHO] = {[ 0 ... ( TAMANHO-1 ) ] = 0};
+static uint16_t Val_ARR[TAMANHO] = {[ 0 ... ( TAMANHO-1 )] = 0};
 
 void Preenche_Angulo ( )
 {
