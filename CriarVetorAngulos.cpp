@@ -1,57 +1,57 @@
 #include <iostream>
 #include <fstream>
 
-#define TAMANHO 180
+#define SIZE 180
 
-static void Preenche_Angulo(uint16_t *angulos, uint16_t arr);
-static void Calcula_ARR(uint16_t *angulos, uint16_t *val_arr, uint16_t arr);
+static void Fill_Angle(uint16_t *angles, uint16_t arr);
+static void Calculate_ARR(uint16_t *angles, uint16_t *val_arr, uint16_t arr);
 
 int main(void)
 {
     uint16_t arr;
-    std::cout << "Insira o valor de ARR: ";
+    std::cout << "Enter the value of ARR: ";
     std::cin >> arr;
 
-    uint16_t Val_Angulos[TAMANHO] = {0};
-    uint16_t Val_ARR[TAMANHO] = {0};
+    uint16_t Val_Angles[SIZE] = {0};
+    uint16_t Val_ARR[SIZE] = {0};
 
-    Preenche_Angulo(Val_Angulos, arr);
-    Calcula_ARR(Val_Angulos, Val_ARR, arr);
+    Fill_Angle(Val_Angles, arr);
+    Calculate_ARR(Val_Angles, Val_ARR, arr);
 
-    std::ofstream arquivo("Vetor_Rampa.h");
+    std::ofstream file("ramp_vector.h");
 
-    if (arquivo.is_open())
+    if (file.is_open())
     {
-        arquivo << "#ifndef _VETOR_RAMPA_H_" << std::endl;
-        arquivo << "#define _VETOR_RAMPA_H_" << std::endl << std::endl;
+        file << "#ifndef _RAMP_VECTOR_H_" << std::endl;
+        file << "#define _RAMP_VECTOR_H_" << std::endl << std::endl;
 
-        arquivo << "// TABELA DE ANGULOS CORRESPONDENTES AO ARR SELECIONADO: " << arr << std::endl;
+        file << "// ANGLE TABLE CORRESPONDING TO THE SELECTED ARR: " << arr << std::endl;
 
-        arquivo << "uint16_t Rampa_SoftStarter[" << TAMANHO << "] = {" << std::endl;
+        file << "uint16_t Ramp_SoftStarter[" << SIZE << "] = {" << std::endl;
 
-        for (int i = TAMANHO - 1; i >= 0; i--)
+        for (int i = SIZE - 1; i >= 0; i--)
         {
-            arquivo << "    " << *(Val_ARR + i);
+            file << "    " << *(Val_ARR + i);
 
             if (i > 0)
             {
-                arquivo << ",";
+                file << ",";
             }
 
-            arquivo << std::endl;
+            file << std::endl;
         }
 
-        arquivo << "};" << std::endl << std::endl;
+        file << "};" << std::endl << std::endl;
 
-        arquivo << "#endif /* _VETOR_RAMPA_H_ */" << std::endl;
+        file << "#endif /* _RAMP_VECTOR_H_ */" << std::endl;
 
-        arquivo.close();
+        file.close();
 
-        std::cout <<  std::endl << "Arquivo gravado." << std::endl;
+        std::cout <<  std::endl << "File written." << std::endl;
     }
     else
     {
-        std::cout << std::endl << "Erro ao abrir o arquivo." << std::endl;
+        std::cout << std::endl << "Error opening the file." << std::endl;
 
         return 1;
     }
@@ -59,19 +59,19 @@ int main(void)
     return 0;
 }
 
-static void Preenche_Angulo(uint16_t *angulos, uint16_t arr)
+static void Fill_Angle(uint16_t *angles, uint16_t arr)
 {
-    for (uint16_t i = 0; i < TAMANHO; i++)
+    for (uint16_t i = 0; i < SIZE; i++)
     {
-        *(angulos + i) = i + 1;
+        *(angles + i) = i + 1;
     }
 }
 
-static void Calcula_ARR(uint16_t *angulos, uint16_t *val_arr, uint16_t arr)
+static void Calculate_ARR(uint16_t *angles, uint16_t *val_arr, uint16_t arr)
 {
-    for (uint16_t i = 0; i < TAMANHO; i++)
+    for (uint16_t i = 0; i < SIZE; i++)
     {
-        uint16_t X_arr = ((arr * *(angulos + i)) / 180);
+        uint16_t X_arr = ((arr * *(angles + i)) / 180);
 
         *(val_arr + i) = X_arr;
     }
