@@ -268,7 +268,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			HAL_GPIO_WritePin(Emergencia_GPIO_Port, Emergencia_Pin, GPIO_PIN_RESET);
 
-			Pulso[SUBIDA] = Rampa_SoftStarter[i];
+			Pulso[SUBIDA] = Ramp_SoftStarter[i];
 			Pulso[DESCIDA] = (Pulso[SUBIDA] + LARGURA_PULSO_CCR);
 
 			strcpy(msg, "RDS\n"); // UTILIZADO PARA MANDAR COMANDO SERIAL A IHM DO CUBE MONITOR
@@ -302,7 +302,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			HAL_GPIO_WritePin(Bypass_GPIO_Port, Bypass_Pin, GPIO_PIN_RESET);
 
-			Pulso[SUBIDA]= Rampa_SoftStarter[i];
+			Pulso[SUBIDA]= Ramp_SoftStarter[i];
 			Pulso[DESCIDA] = (Pulso[SUBIDA] + LARGURA_PULSO_CCR);
 
 			strcpy(msg, "RDD\n"); // UTILIZADO PARA MANDAR COMANDO SERIAL A IHM DO CUBE MONITOR
