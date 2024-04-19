@@ -78,7 +78,7 @@
 
 //MAQUINA DE ESTADOS PRINCIPAL
 typedef enum {PARADA = 0, SUBINDO, DESCENDO, BYPASS} Rampa_t;
-Rampa_t Rampa = PARADA;
+static Rampa_t Rampa = PARADA;
 
 //ESTADOS DE VETORES
 enum {AD = 0, VINT};
@@ -95,7 +95,7 @@ static uint16_t i;
 static uint16_t angulo;
 
 //CONVERSÃO ANALOGICO DIGITAL E SOBRECORRENTE
-volatile uint16_t ADC_Val[N_CONVERSOES] = {[0...N_CONVERSOES], 0};
+static volatile uint16_t ADC_Val[N_CONVERSOES] = { [ 0 ... (N_CONVERSOES - 1) ] = 0 };
 
 static float I_Atual;
 static float I_Nominal = 450.0;
@@ -103,8 +103,8 @@ static float I_LimiteRampa = 1.5;     // 150%
 static float I_Max = 2.0;             // 200%
 
 //TRANSMISSÃO E RECEPÇÃO SERIAL
-static uint8_t comando[T_CMD] = {[0...T_CMD], 0};
-static char msg[T_MSG] = {[0...T_MSG], 0};
+static uint8_t comando[T_CMD] =  { [ 0 ... (T_CMD - 1) ] = 0 };;
+static char msg[T_MSG] =  { [ 0 ... (T_MSG - 1) ] = 0 };;
 
 //CALCULOS PARA TEMPO DE RAMPA
 static uint16_t t_partida;
@@ -240,32 +240,24 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
 	UNUSED(htim);
 
-	if(htim->Instance == TIM3 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
+	if( (htim->Instance == TIM3) && (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) )
 	{
+		Borda = (Borda == DESCIDA) ? SUBIDA : DESCIDA;
 
-		if(Borda == DESCIDA)
-		{
-			Borda = SUBIDA;
-		}
-		else
-		{
-			Borda = DESCIDA;
-		}
-
-			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, (Pulso[Borda]));
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, (Pulso[Borda]));
 	}
-
+	else
+	{
+		__NOP();
+	}
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
 	UNUSED(htim);
 
 	if(htim->Instance == TIM2)
@@ -280,6 +272,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			Pulso[DESCIDA] = (Pulso[SUBIDA] + LARGURA_PULSO_CCR);
 
 			strcpy(msg, "RDS\n"); // UTILIZADO PARA MANDAR COMANDO SERIAL A IHM DO CUBE MONITOR
+			
 			HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), TIMEOUT);
 
 			if(I_Atual<(I_Nominal*I_LimiteRampa))
@@ -296,15 +289,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			if(i == T_RAMPA_MAX)
 			{
-
 				i = T_RAMPA_MAX;
 
 				Rampa = BYPASS;
 
 				htim3.Instance->CCMR1 &=~ TIM_CCMR1_OC1CE;
-
 			}
-
 		}
 
 		if(Rampa == DESCENDO && i >= T_RAMPA_MIN)
@@ -332,7 +322,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			if(i == T_RAMPA_MIN)
 			{
-
 				i = T_RAMPA_MIN;
 
 				Rampa = PARADA;
@@ -340,14 +329,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				HAL_TIM_OC_Stop_IT(&htim3, TIM_CHANNEL_1);
 
 				htim3.Instance->CCMR1 |= TIM_CCMR1_OC1CE;
-
 			}
-
 		}
 
 		if(Rampa == PARADA)
 		{
-
 			i = T_RAMPA_MIN;
 
 			Pulso[SUBIDA]= Rampa_SoftStarter[i];
@@ -359,12 +345,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			strcpy(msg, "OFF\n"); // UTILIZADO PARA MANDAR COMANDO SERIAL A IHM DO CUBE MONITOR
 			HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), TIMEOUT);
-
 		}
 
 		if(Rampa == BYPASS)
 		{
-
 			i = T_RAMPA_MAX;
 
 			htim3.Instance->CCMR1 &=~ TIM_CCMR1_OC1CE;
@@ -373,13 +357,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			strcpy(msg, "ON\n"); // UTILIZADO PARA MANDAR COMANDO SERIAL A IHM DO CUBE MONITOR
 			HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), TIMEOUT);
-
 		}
 
 	}
+	
 	if(htim->Instance == TIM10)
 	{
-
 		  HAL_ADC_Start_IT(&hadc1);
 
 		  switch(Rampa)
@@ -419,11 +402,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		  		__NOP();
 
 		  			break;
-
 		  }
-
 	}
-
 }
 
 
