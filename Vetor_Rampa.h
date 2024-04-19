@@ -1,4 +1,5 @@
-// ARQUIVO GERADO COM O SCRIPT EM C++, INCLUÍDO NESSE REPOSITÓRIO
+#ifndef _VETOR_RAMPA_H_
+#define _VETOR_RAMPA_H_
 
 uint16_t Rampa_SoftStarter[180] = {
     17400,
@@ -182,3 +183,5 @@ uint16_t Rampa_SoftStarter[180] = {
     193,
     96
 };
+
+#endif /* _VETOR_RAMPA_H_ */
