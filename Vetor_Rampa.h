@@ -1,7 +1,7 @@
-#ifndef _VETOR_RAMPA_H_
-#define _VETOR_RAMPA_H_
+#ifndef _RAMP_VECTOR_H_
+#define _RAMP_VECTOR_H_
 
-// TABELA DE ANGULOS CORRESPONDENTES AO ARR SELECIONADO: 17400
+// ANGLE TABLE CORRESPONDING TO THE SELECTED ARR: 17400
 uint16_t Rampa_SoftStarter[180] = {
     17400,
     17303,
@@ -185,4 +185,4 @@ uint16_t Rampa_SoftStarter[180] = {
     96
 };
 
-#endif /* _VETOR_RAMPA_H_ */
+#endif /*_RAMP_VECTOR_H_ */
