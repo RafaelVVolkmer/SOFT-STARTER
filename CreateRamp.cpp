@@ -8,12 +8,13 @@ static void Calculate_ARR(uint16_t *angles, uint16_t *val_arr, uint16_t arr);
 
 int main(void)
 {
+    uint16_t Val_Angles[SIZE];
+    uint16_t Val_ARR[SIZE];
+    
     uint16_t arr;
+    
     std::cout << "Enter the value of ARR: ";
     std::cin >> arr;
-
-    uint16_t Val_Angles[SIZE] = {0};
-    uint16_t Val_ARR[SIZE] = {0};
 
     Fill_Angle(Val_Angles, arr);
     Calculate_ARR(Val_Angles, Val_ARR, arr);
